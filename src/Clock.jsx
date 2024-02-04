@@ -11,6 +11,6 @@ export default function Clock({ timeZone }) {
   return (
     <p>{`${date.toLocaleString("en-GB", {
       timeZone: timeZone,
-    })} (Time in ${timeZone})`}</p>
+    })}`}</p>
   );
 }

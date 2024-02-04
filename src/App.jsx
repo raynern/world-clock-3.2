@@ -1,24 +1,54 @@
 import time from "/time.jpg";
 import "./App.css";
-import Clock from "./Clock.jsx";
+import WorldClock from "./WorldClock.jsx";
+
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Figure from "react-bootstrap/Figure";
+
+import { useState } from "react";
+
+import { allTimeZones } from "./allTimeZones.js";
 
 function App() {
+  const [clockData, setClockData] = useState(["Asia/Singapore"]);
+
+  const [option, setOption] = useState(allTimeZones[0]);
+
   return (
     <>
       <div>
-        <img src={time} className="logo" alt="time logo" />
-        <p>This image is generated using Bard.</p>
+        <Figure>
+          <Figure.Image className="w-25" alt="time logo" src={time} />
+          <Figure.Caption>This image is generated using Bard.</Figure.Caption>
+        </Figure>
       </div>
-      <h1>World Clock</h1>
-      <div className="card">
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-        <Clock timeZone="US/Pacific" />
-        <Clock timeZone="Asia/Singapore" />
-        <Clock timeZone="Japan" />
-        <p>{"Hello world"}</p>
-      </div>
+      <h3>World Clock</h3>
+      <Card className="mt-3 d-flex flex-column align-items-center">
+        <Form.Select
+          className="w-50"
+          onChange={(e) => setOption(e.target.value)}
+        >
+          {allTimeZones.map((timeZone, i) => {
+            return (
+              <option key={i} value={timeZone}>
+                {timeZone}
+              </option>
+            );
+          })}
+        </Form.Select>
+        <Button
+          variant="primary"
+          className="w-50 mt-3"
+          onClick={() => setClockData([...clockData, option])}
+        >
+          Add timezone now
+        </Button>
+      </Card>
+      <Card className="mt-3">
+        <WorldClock clockData={clockData} />
+      </Card>
     </>
   );
 }
